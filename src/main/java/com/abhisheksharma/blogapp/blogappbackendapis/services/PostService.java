@@ -22,8 +22,10 @@ public interface PostService {
     //search posts
     List<Post> searchPosts(String keyword);
 
+    //update post
     PostDto updatePost(PostDto postDto, Integer postId);
 
+    //delete post
     void deletePost(Integer postId);
 
 }
