@@ -2,6 +2,7 @@ package com.abhisheksharma.blogapp.blogappbackendapis.services;
 
 import com.abhisheksharma.blogapp.blogappbackendapis.entities.Post;
 import com.abhisheksharma.blogapp.blogappbackendapis.payloads.PostDto;
+import com.abhisheksharma.blogapp.blogappbackendapis.payloads.PostResponse;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface PostService {
 
     PostDto createPost(PostDto postDto, Integer userId, Integer categoryId);
 
-    List<PostDto> getAllPosts();
+    PostResponse getAllPosts(Integer pageNumber, Integer pageSize);
 
     PostDto getPostById(Integer postId);
 
@@ -17,7 +18,7 @@ public interface PostService {
     List<PostDto> getAllPostsByCategoryId(Integer categoryId);
 
     //get all posts by users
-    List<PostDto> getAllPostsByUserId(Integer userId);
+    PostResponse getAllPostsByUserId(Integer userId, Integer pageNumber, Integer pageSize);
 
     //search posts
     List<Post> searchPosts(String keyword);

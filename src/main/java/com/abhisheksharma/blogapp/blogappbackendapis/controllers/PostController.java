@@ -2,6 +2,7 @@ package com.abhisheksharma.blogapp.blogappbackendapis.controllers;
 
 import com.abhisheksharma.blogapp.blogappbackendapis.payloads.ApiResponse;
 import com.abhisheksharma.blogapp.blogappbackendapis.payloads.PostDto;
+import com.abhisheksharma.blogapp.blogappbackendapis.payloads.PostResponse;
 import com.abhisheksharma.blogapp.blogappbackendapis.services.PostService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,12 @@ public class PostController {
     }
 
     @GetMapping("/posts/all")
-    ResponseEntity<List<PostDto>> getAllPosts(){
-        List<PostDto> posts = this.postService.getAllPosts();
-        return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
+    ResponseEntity<PostResponse> getAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize
+            ){
+        PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize);
+        return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
     }
 
     @GetMapping("/posts/{postId}")
@@ -37,9 +41,13 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}/posts")
-    ResponseEntity<List<PostDto>> getPostsByUserId(@PathVariable Integer userId){
-        List<PostDto> posts = this.postService.getAllPostsByUserId(userId);
-        return new ResponseEntity<List<PostDto>>(posts, HttpStatus.OK);
+    ResponseEntity<PostResponse> getPostsByUserId(
+            @PathVariable Integer userId,
+            @RequestParam(value="pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+            @RequestParam(value="pageSize", defaultValue = "5", required = false) Integer pageSize
+    ){
+        PostResponse posts = this.postService.getAllPostsByUserId(userId, pageNumber, pageSize);
+        return new ResponseEntity<PostResponse>(posts, HttpStatus.OK);
     }
 
     @GetMapping("/category/{categoryId}/posts")
